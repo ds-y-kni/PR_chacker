@@ -9,6 +9,7 @@ env:
   GITHUB_BASE_REF : 'main'
   GITHUB_HEAD_REF : 'main/dev'
   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} #トークンの宣言。必要
+  diff_path : 'code/**'
   URL: ${{ github.event.pull_request.html_url }} #プルリクのURL。参照していないが、消すと動かない？
 jobs:
   build:  # job id
