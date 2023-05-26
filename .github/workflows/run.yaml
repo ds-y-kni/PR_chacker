@@ -17,7 +17,9 @@ jobs:
     steps:
       - name: checkout source code     # step 01 名
         uses: actions/checkout@master  # Source Code checkout
-
+      - name:test
+        run:
+          echo "$(git diff --name-only HEAD origin/${GITHUB_BASE_REF}...origin/${GITHUB_HEAD_REF} -- "${diff_path}" tr "\n" " ")"
       - name: Run actions using diff_files #変更のあるファイルを抽出する。
         run: |
           echo "diff_files=git diff --name-only HEAD origin/${GITHUB_BASE_REF}...origin/${GITHUB_HEAD_REF} -- "${diff_path}" tr "\n" " "" >> $GITHUB_OUTPUT
