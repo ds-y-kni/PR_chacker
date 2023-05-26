@@ -14,19 +14,20 @@ jobs:
     name:  find hoge # job 名
     runs-on: ubuntu-latest # 仮想環境指定（Windows Server, Ubuntu, Mac OSをサポートする）
     steps:
-name: checkout source code     # step 01 名
-      uses: actions/checkout@master  # Source Code checkout
-name: Run actions using diff_files #変更のあるファイルを抽出する。
-      run: |
-        echo "::set-output name=HOGEHOGE::git diff HEAD --name-only  ${base_branch} -- "${diff_path}" tr "\n" " "   "
+      - name: checkout source code     # step 01 名
+        uses: actions/checkout@master  # Source Code checkout
+        
+      - name: Run actions using diff_files #変更のあるファイルを抽出する。
+        run: |
+          echo "::set-output name=HOGEHOGE::git diff HEAD --name-only  ${base_branch} -- "${diff_path}" tr "\n" " "   "
 
-name: Display file name if it contains hoge #差分内に[hoge] を含む場合に、プルリクにコメントし却下する。
-      run: |
-        if  grep -rE "hoge" ${diff_files}; then
-          gh pr comment -b "contains hoge" ${{github.event.pull_request.html_url }}
-          gh pr close ${{github.event.pull_request.html_url }}
-          echo "contains hoge"
-        fi
+      - name: Display file name if it contains hoge #差分内に[hoge] を含む場合に、プルリクにコメントし却下する。
+        run: |
+          if  grep -rE "hoge" ${diff_files}; then
+            gh pr comment -b "contains hoge" ${{github.event.pull_request.html_url }}
+            gh pr close ${{github.event.pull_request.html_url }}
+            echo "contains hoge"
+          fi
 
 
 
