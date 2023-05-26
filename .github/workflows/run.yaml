@@ -7,8 +7,8 @@ on:
 env:
   base_branch: 'main'
   diff_path: 'code/**.py' #チェックするディレクトリと拡張子の指定
-  github_token: ${{ secrets.GITHUB_TOKEN }} #トークンの宣言。必要
-  url: ${{ github.event.pull_request.html_url }} #プルリクのURL。参照していないが、消すと動かない？
+  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} #トークンの宣言。必要
+  URL: ${{ github.event.pull_request.html_url }} #プルリクのURL。参照していないが、消すと動かない？
 jobs:
   build:  # job id
     name:  find hoge # job 名
@@ -16,7 +16,7 @@ jobs:
     steps:
       - name: checkout source code     # step 01 名
         uses: actions/checkout@master  # Source Code checkout
-        
+
       - name: Run actions using diff_files #変更のあるファイルを抽出する。
         run: |
           echo "::set-output name=HOGEHOGE::git diff HEAD --name-only  ${base_branch} -- "${diff_path}" tr "\n" " "   "
