@@ -24,6 +24,7 @@ jobs:
 
       - name: Display file name if it contains hoge #差分内に[hoge] を含む場合に、プルリクにコメントし却下する。
         run: |
+          echo "ls"
           if  grep -rE "hoge" ${diff_files}; then
             gh pr comment -b "$(grep -rE "hoge" ${diff_files})" ${{github.event.pull_request.html_url }}
             gh pr close ${{github.event.pull_request.html_url }}
