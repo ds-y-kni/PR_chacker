@@ -14,17 +14,20 @@ jobs:
   build:  # job id
     name:  find hoge # job 名
     runs-on: ubuntu-latest # 仮想環境指定（Windows Server, Ubuntu, Mac OSをサポートする）
+    with:
+      PATTERNS: |
+        +(code)/**.py
     steps:
       - name: checkout source code     # step 01 名
         uses: actions/checkout@master  # Source Code checkout
 
-      - name: Run actions using diff_files #変更のあるファイルを抽出する。
-        run: |
-          echo "diff_files=git diff HEAD origin/${GITHUB_BASE_REF}...origin/${GITHUB_HEAD_REF} --name-only -- "${diff_path}" -- ':(exclude).github/workflows/*' tr "\n" " "" >> $GITHUB_OUTPUT
+      #- name: Run actions using diff_files #変更のあるファイルを抽出する。
+      #  run: |
+      #    echo "diff_files=git diff HEAD origin/${GITHUB_BASE_REF}...origin/${GITHUB_HEAD_REF} --name-only -- "${diff_path}" -- ':(exclude).github/workflows/*' tr "\n" " "" >> $GITHUB_OUTPUT
 
       - name: Display file name if it contains hoge #差分内に[hoge] を含む場合に、プルリクにコメントし却下する。
         run: |
-          if  grep -rE "hoge" ${diff_files}; then
+          if  grep -rE "hoge" ${{ env.GIT_DIFF }}; then
             gh pr comment -b "$(grep -rE "hoge" ${diff_files})" ${{github.event.pull_request.html_url }}
             gh pr close ${{github.event.pull_request.html_url }}
             echo "contains hoge"
