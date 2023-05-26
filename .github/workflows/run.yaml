@@ -23,7 +23,7 @@ jobs:
       
       - name: Run test #変更のあるファイルを抽出する。
         run: |
-          echo "${diff_files}"
+          echo "$diff_files"
 
       - name: Display file name if it contains hoge #差分内に[hoge] を含む場合に、プルリクにコメントし却下する。
         run: |
