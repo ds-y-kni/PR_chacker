@@ -20,7 +20,7 @@ jobs:
 
       - name: Run actions using diff_files #変更のあるファイルを抽出する。
         run: |
-          echo "diff_files=git diff HEAD origin/${GITHUB_BASE_REF}...origin/${GITHUB_HEAD_REF} --name-only -- "${diff_path}" tr "\n" " "" >> $GITHUB_OUTPUT
+          echo "diff_files=git diff HEAD origin/${GITHUB_BASE_REF}...origin/${GITHUB_HEAD_REF} --name-only -- "${diff_path}" -- ':(exclude).github/workflows/*' tr "\n" " "" >> $GITHUB_OUTPUT
 
       - name: Display file name if it contains hoge #差分内に[hoge] を含む場合に、プルリクにコメントし却下する。
         run: |
