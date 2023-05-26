@@ -21,13 +21,9 @@ jobs:
       - name: Run actions using diff_files #変更のあるファイルを抽出する。
         run: |
           echo "diff_files=git diff --name-only HEAD origin/${GITHUB_BASE_REF}...origin/${GITHUB_HEAD_REF} -- "${diff_path}" tr "\n" " "" >> $GITHUB_OUTPUT
-      - name: Run actions using diff_files #変更のあるファイルを抽出する。
-        run: |
-          grep "hoge" ${diff_files}
       - name: Display file name if it contains hoge #差分内に[hoge] を含む場合に、プルリクにコメントし却下する。
         run: |
-          echo ${diff_files}
-          if  grep -rE "hoge" ${diff_files}; then
+          if  grep "hoge" ${diff_files}; then
             gh pr comment -b "$(grep "hoge" ${diff_files})" ${{github.event.pull_request.html_url }}
             gh pr close ${{github.event.pull_request.html_url }}
             echo "contains hoge"
