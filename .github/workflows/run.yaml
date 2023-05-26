@@ -3,11 +3,11 @@ on:
   pull_request:
     types: [opened, synchronize, reopened]
     branches: [ main ]
+    diff_path: 'code/**' #チェックするディレクトリと拡張子の指定
 env:
   base_branch: 'main'
   GITHUB_BASE_REF : 'main'
   GITHUB_HEAD_REF : 'main/dev'
-  paths: '/code' #チェックするディレクトリと拡張子の指定
   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} #トークンの宣言。必要
   URL: ${{ github.event.pull_request.html_url }} #プルリクのURL。参照していないが、消すと動かない？
 jobs:
@@ -20,7 +20,7 @@ jobs:
 
       - name: Run actions using diff_files #変更のあるファイルを抽出する。
         run: |
-          echo "diff_files=git diff HEAD origin/${GITHUB_BASE_REF}...origin/${GITHUB_HEAD_REF} --name-only -- "${paths}" tr "\n" " "" >> $GITHUB_OUTPUT
+          echo "diff_files=git diff HEAD origin/${GITHUB_BASE_REF}...origin/${GITHUB_HEAD_REF} --name-only -- "${diff_path}" tr "\n" " "" >> $GITHUB_OUTPUT
 
       - name: Display file name if it contains hoge #差分内に[hoge] を含む場合に、プルリクにコメントし却下する。
         run: |
