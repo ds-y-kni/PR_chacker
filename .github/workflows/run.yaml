@@ -19,7 +19,7 @@ jobs:
 
       - name: Run test #変更のあるファイルを抽出する。
         run: |
-          echo "git diff HEAD --name-only  ${base_branch} -- "${diff_path}" tr "\n" " ""
+          git diff HEAD --name-only  ${base_branch} -- "${diff_path}" tr "\n" " "
 
       - name: Run actions using diff_files #変更のあるファイルを抽出する。
         run: |
