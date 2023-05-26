@@ -1,1 +1,1 @@
-print("hoge world")
+print("world")
