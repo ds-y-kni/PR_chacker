@@ -16,11 +16,9 @@ jobs:
     steps:
       - name: checkout source code     # step 01 名
         uses: actions/checkout@master  # Source Code checkout
-​
       - name: Run actions using diff_files #変更のあるファイルを抽出する。
         run: |
           diff_files=git diff --name-only -G hoge HEAD origin/${base_branch} -- ${diff_path} | tr "\n" " "
-​
       - name: Display file name if it contains hoge #差分内に[hoge] を含む場合に、プルリクにコメントし却下する。
         run: |
           echo ${diff_files}
