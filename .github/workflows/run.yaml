@@ -17,13 +17,14 @@ jobs:
       - name: checkout source code     # step 01 名
         uses: actions/checkout@master  # Source Code checkout
 
-      - name: Run test #変更のあるファイルを抽出する。
-        run: |
-          git diff HEAD --name-only  ${base_branch} -- "${diff_path}" tr "\n" " "
-
       - name: Run actions using diff_files #変更のあるファイルを抽出する。
         run: |
           echo "diff_files=git diff HEAD --name-only  ${base_branch} -- "${diff_path}" tr "\n" " "" >> $GITHUB_OUTPUT
+      
+      - name: Run test #変更のあるファイルを抽出する。
+        run: |
+          echo "${diff_files}"
+
       - name: Display file name if it contains hoge #差分内に[hoge] を含む場合に、プルリクにコメントし却下する。
         run: |
           if  grep -rE "hoge" ${diff_files}; then
