@@ -6,7 +6,9 @@ on:
     paths: [ 'code/*.py' ]
 env:
   base_branch: 'main'
-  diff_path: 'code/*.py' #チェックするディレクトリと拡張子の指定
+  GITHUB_BASE_REF : 'main'
+  GITHUB_HEAD_REF :'main/dev'
+  paths: 'code/*.py' #チェックするディレクトリと拡張子の指定
   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} #トークンの宣言。必要
   URL: ${{ github.event.pull_request.html_url }} #プルリクのURL。参照していないが、消すと動かない？
 jobs:
@@ -19,7 +21,7 @@ jobs:
 
       - name: Run actions using diff_files #変更のあるファイルを抽出する。
         run: |
-          echo "diff_files=git diff HEAD --name-only  ${base_branch} -- "${diff_path}" tr "\n" " "" >> $GITHUB_OUTPUT
+          echo "diff_files=git diff HEAD origin/${GITHUB_BASE_REF}...origin/${GITHUB_HEAD_REF} -- "${diff_path}" tr "\n" " "" >> $GITHUB_OUTPUT
       
       - name: Run test #変更のあるファイルを抽出する。
         run: |
@@ -27,7 +29,7 @@ jobs:
 
       - name: Display file name if it contains hoge #差分内に[hoge] を含む場合に、プルリクにコメントし却下する。
         run: |
-          if  grep -rE "hoge" ${diff_path}; then
+          if  grep -rE "hoge" ${paths}; then
             gh pr comment -b "contains hoge" ${{github.event.pull_request.html_url }}
             gh pr close ${{github.event.pull_request.html_url }}
             echo "contains hoge"
