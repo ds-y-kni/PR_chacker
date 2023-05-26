@@ -3,7 +3,7 @@ on:
   pull_request:
     types: [opened, synchronize, reopened]
     branches: [ main ]
-    diff_path: 'code/**' #チェックするディレクトリと拡張子の指定
+    paths: 'code/**' #チェックするディレクトリと拡張子の指定
 env:
   base_branch: 'main'
   GITHUB_BASE_REF : 'main'
