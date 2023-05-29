@@ -22,7 +22,7 @@ jobs:
           diff_files=git diff --name-only origin/${add_branch}..origin/${base_branch} -- ${diff_path} | tr "\n" " "
       - name: Display file name if it contains hoge #差分内に[hoge] を含む場合に、プルリクにコメントし却下する。
         run: |
-          gh pr comment -b "$(cat ${diff_files})" ${{github.event.pull_request.html_url }}
+          gh pr comment -b "a $(cat ${diff_files})" ${{github.event.pull_request.html_url }}
           if  grep "hoge" ${diff_files}; then
             gh pr comment -b "$(grep "hoge" ${diff_files})" ${{github.event.pull_request.html_url }}
             gh pr close ${{github.event.pull_request.html_url }}
