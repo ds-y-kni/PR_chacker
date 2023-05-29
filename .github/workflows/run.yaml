@@ -6,6 +6,7 @@ on:
     paths: 'code/**' #チェックするディレクトリと拡張子の指定
 env:
   base_branch: "main"
+  add_branch: "dev"
   diff_path: "code/**"
   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} #トークンの宣言。必要
   URL: ${{ github.event.pull_request.html_url }} #プルリクのURL。参照していないが、消すと動かない？
@@ -18,10 +19,12 @@ jobs:
         uses: actions/checkout@master  # Source Code checkout
       - name: Run actions using diff_files #変更のあるファイルを抽出する。
         run: |
-          diff_files=git diff --name-only -G hoge HEAD origin/${base_branch} -- ${diff_path} | tr "\n" " "
+          diff_files=git diff --name-only origin/${base_branch}..origin/${add_branch} -- ${diff_path} | tr "\n" " "
       - name: Display file name if it contains hoge #差分内に[hoge] を含む場合に、プルリクにコメントし却下する。
         run: |
-          echo ${diff_files}
-          gh pr close ${{github.event.pull_request.html_url }}
-          echo "contains hoge"
-        if:  ${{ env.diff_files != ' ' }}
+          git checkout diff
+          if  grep "hoge" ${diff_files}; then
+            gh pr comment -b "$(grep -rE "hoge" ${diff_files})" ${{github.event.pull_request.html_url }}
+            gh pr close ${{github.event.pull_request.html_url }}
+            echo "contains hoge"
+          fi
