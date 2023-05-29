@@ -24,4 +24,4 @@ jobs:
           echo ${diff_files}
           gh pr close ${{github.event.pull_request.html_url }}
           echo "contains hoge"
-        if: ${{ diff_files != '' }}
+        if: ${{ $diff_files != '' }}
