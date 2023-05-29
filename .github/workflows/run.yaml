@@ -24,7 +24,7 @@ jobs:
 
       - name: Run actions using diff_files #変更のあるファイルを抽出する。
         run: |
-          echo "diff_files= git diff --name-only  HEAD ${base_branch} -- ${diff_path}| tr "\n" " " ">>$GIT_OUTPUT
+           echo "diff_files= git diff --name-only  HEAD ${base_branch} -- ${diff_path}| tr "\n" " "" >> $GITHUB_OUTPUT
       - name: Display file name if it contains hoge #差分内に[hoge] を含む場合に、プルリクにコメントし却下する。
       
         run: |
