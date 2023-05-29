@@ -16,9 +16,8 @@ jobs:
     runs-on: ubuntu-latest # 仮想環境指定（Windows Server, Ubuntu, Mac OSをサポートする）
     steps:
       - name: checkout source code     # step 01 名
-        uses: actions/checkout@master  # Source Code checkout
-      - name: Run actions using diff_files #変更のあるファイルを抽出する。
         uses: actions/checkout@${add_branch}  # Source Code checkout
+      - name: Run actions using diff_files #変更のあるファイルを抽出する。
         run: |
           diff_files=git diff --name-only origin/${base_branch}..origin/${add_branch} -- ${diff_path} | tr "\n" " "
       - name: Display file name if it contains hoge #差分内に[hoge] を含む場合に、プルリクにコメントし却下する。
