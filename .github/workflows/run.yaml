@@ -30,7 +30,7 @@ jobs:
         run: |
 
           gh pr comment -b "debug-git_diff,$(git diff --name-only  HEAD ${base_branch} -- ${diff_path})" ${{github.event.pull_request.html_url }}
-          gh pr comment -b "debug-diff_files,$(echo $diff_files})" ${{github.event.pull_request.html_url }}
+          gh pr comment -b "debug-diff_files,$(echo $diff_files)" ${{github.event.pull_request.html_url }}
           gh pr comment -b "debug-grep,$(grep "hoge" coed/sample2.py)" ${{github.event.pull_request.html_url }}
           if  grep "hoge" ${diff_files}; then
             gh pr comment -b "$(grep "hoge" ${diff_files})" ${{github.event.pull_request.html_url }}
