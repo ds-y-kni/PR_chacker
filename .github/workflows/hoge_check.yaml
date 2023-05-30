@@ -1,9 +1,10 @@
-name: pr_checker             # workflow 名
+name: pr_hoge_checker             # workflow 名
 on:
   pull_request:
     types: [opened, synchronize, reopened]
     branches: [ main ]
-    paths: 'code/**' #チェックするディレクトリと拡張子の指定
+    paths: 
+      - 'code/**' #チェックするディレクトリと拡張子の指定
 env:
   base_branch: "main" 
   diff_path: "code/**" #探索する文字列の指定
@@ -27,6 +28,6 @@ jobs:
           if  grep ${target_str} ${diff_files}; then
             gh pr comment -b "${diff_files}で${target_str}を検知しました。
              $(grep ${target_str} ${diff_files})" ${{github.event.pull_request.html_url }}
-            gh pr close ${{github.event.pull_request.html_url }}
+            exit 1
             echo "contains ${target_str}"
           fi
