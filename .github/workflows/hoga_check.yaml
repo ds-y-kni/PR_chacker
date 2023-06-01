@@ -11,7 +11,7 @@ env:
   URL: ${{ github.event.pull_request.html_url }} #プルリクのURL。
 jobs:
   build:  # job id
-    name:  Find hello strings # job 名
+    name:  Find hoga strings # job 名
     runs-on: ubuntu-latest # 仮想環境指定（Windows Server, Ubuntu, Mac OSをサポートする）
     steps:
       - name: Switch to pull request branch
@@ -24,8 +24,8 @@ jobs:
         run: |
           diff_files=`git diff --name-only -G ${target_str} HEAD origin/${base_branch} -- ${diff_path} | tr "\n" " "`
           if  grep ${target_str} ${diff_files}; then
-            gh pr comment -b "${diff_files}で${target_str}を検知しました。
-             $(grep ${target_str} -n ${diff_files})" ${{github.event.pull_request.html_url }}
+            gh pr comment -b "${target_str}を検知しました。
+             $(grep ${target_str} -n -H ${diff_files})" ${{github.event.pull_request.html_url }}
             exit 1
             echo "contains ${target_str}"
           fi

@@ -24,7 +24,7 @@ jobs:
         run: |
           diff_files=`git diff --name-only -G ${target_str} HEAD origin/${base_branch} -- ${diff_path} | tr "\n" " "`
           if  grep -L ${target_str} ${diff_files}; then
-            gh pr comment -b "$(grep ${target_str} -L ${diff_files})に${target_str}が含まれていませんでした。" ${{github.event.pull_request.html_url }}
+            gh pr comment -b "$(grep -L ${target_str} ${diff_files})に${target_str}が含まれていませんでした。" ${{github.event.pull_request.html_url }}
             exit 1
             echo "contains ${target_str}"
           fi
