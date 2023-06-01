@@ -1,4 +1,4 @@
-name: pr_hello_checker             # workflow 名
+name: pr_hoga_checker             # workflow 名
 on:
   pull_request:
     types: [opened, synchronize, reopened]
@@ -6,7 +6,7 @@ on:
 env:
   base_branch: "main" 
   diff_path: "code/**" #探索する文字列の指定
-  target_str: "hello" #探索する文字列の指定
+  target_str: "hoga" #探索する文字列の指定
   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} #トークンの宣言。
   URL: ${{ github.event.pull_request.html_url }} #プルリクのURL。
 jobs:
@@ -20,7 +20,7 @@ jobs:
           ref: ${{ github.event.pull_request.head.sha }}
       - name: Fetch base branch
         run: git fetch origin ${base_branch}:${base_branch}
-      - name: Display file name if it contains hello #差分内に${target_str} を含む場合に、プルリクにコメントし却下する。
+      - name: Display file name if it contains hoga #差分内に${target_str} を含む場合に、プルリクにコメントし却下する。
         run: |
           diff_files=`git diff --name-only -G ${target_str} HEAD origin/${base_branch} -- ${diff_path} | tr "\n" " "`
           if  grep ${target_str} ${diff_files}; then
