@@ -24,7 +24,7 @@ jobs:
         run: |
           diff_files=`git diff --name-only -G ${target_str} HEAD origin/${base_branch} -- ${diff_path} | tr "\n" " "`
           if  grep ${target_str} ${diff_files}; then
-            gh pr comment -b "${diff_files}で${target_str}を検知しました。
+            gh pr comment -b "${target_str}を検知しました。
              $(grep ${target_str} -n -H ${diff_files})" ${{github.event.pull_request.html_url }}
             exit 1
             echo "contains ${target_str}"
