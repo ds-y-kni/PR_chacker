@@ -23,7 +23,7 @@ jobs:
         run: git fetch origin ${base_branch}:${base_branch}
       - name: Display file name if it contains hoge #差分内に${target_str} を含む場合に、プルリクにコメントし却下する。
         run: |
-          diff_files=`git diff --name-only -G ${target_str} HEAD origin/${base_branch}\
+          diff_files=`git diff --name-only HEAD origin/${base_branch}\
            -- !${exclude_path_1} -- !${exclude_path_2} | tr "\n" " "`
           if  ${diff_files}!=""; then
             gh pr comment -b "${diff_files}が変更されています。" ${{github.event.pull_request.html_url }}
