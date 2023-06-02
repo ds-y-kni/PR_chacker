@@ -1,2 +1,2 @@
 
-print("hello hoge_3418932432!!!")
+print("hello !!!")
