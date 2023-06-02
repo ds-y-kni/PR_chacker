@@ -5,6 +5,7 @@ on:
     branches: [ main ]
 env:
   base_branch: "main" 
+  root_path: "/*"
   exclude_path_1: "!:code/**" #探索する文字列の指定
   exclude_path_2: "!:configfile"
   target_str: "hoge" #探索する文字列の指定
@@ -24,9 +25,9 @@ jobs:
       - name: Display file name if it contains hoge #差分内に${target_str} を含む場合に、プルリクにコメントし却下する。
         run: |
           diff_files=`git diff --name-only HEAD origin/${base_branch}\
-           -- ${exclude_path_1} -- ${exclude_path_2} | tr "\n" " "`
+           -- ${exclude_path_1} -- ${exclude_path_2} -- ${root_path} | tr "\n" " "`
           if  [[ $(git diff --name-only HEAD origin/${base_branch}\
-           -- ${exclude_path_1} -- ${exclude_path_2} | tr "\n" " ") != "" ]]; then
+           -- ${exclude_path_1} -- ${exclude_path_2} -- ${root_path} | tr "\n" " ") != "" ]]; then
             gh pr comment -b "${diff_files}が変更されています。" ${{github.event.pull_request.html_url }}
             exit 1
             echo "contains ${target_str}"
