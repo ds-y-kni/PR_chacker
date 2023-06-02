@@ -25,8 +25,8 @@ jobs:
         run: |
           diff_files=`git diff --name-only HEAD origin/${base_branch}\
            -- ${exclude_path_1} -- ${exclude_path_2} | tr "\n" " "`
-          if  git diff --name-only HEAD origin/${base_branch}\
-           -- ${exclude_path_1} -- ${exclude_path_2} | tr "\n" " "; then
+          gh pr comment -b "${diff_files}が変更されています。" ${{github.event.pull_request.html_url }}
+          if  ${diff_files}; then
             gh pr comment -b "${diff_files}が変更されています。" ${{github.event.pull_request.html_url }}
             exit 1
             echo "contains ${target_str}"
