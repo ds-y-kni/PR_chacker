@@ -5,8 +5,8 @@ on:
     branches: [ main ]
 env:
   base_branch: "main" 
-  exclude_path_1: "code/**" #探索する文字列の指定
-  exclude_path_2: "configfile"
+  exclude_path_1: "!:code/**" #探索する文字列の指定
+  exclude_path_2: "!:configfile"
   target_str: "hoge" #探索する文字列の指定
   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} #トークンの宣言。必要
   URL: ${{ github.event.pull_request.html_url }} #プルリクのURL。参照していないが、消すと動かない？
@@ -24,7 +24,7 @@ jobs:
       - name: Display file name if it contains hoge #差分内に${target_str} を含む場合に、プルリクにコメントし却下する。
         run: |
           diff_files=`git diff --name-only HEAD origin/${base_branch}\
-           -- !${exclude_path_1} -- !${exclude_path_2} | tr "\n" " "`
+           -- ${exclude_path_1} -- ${exclude_path_2} | tr "\n" " "`
           gh pr comment -b "${diff_files}が変更されています。" ${{github.event.pull_request.html_url }}
           if  ${diff_files} != ""; then
             gh pr comment -b "${diff_files}が変更されています。" ${{github.event.pull_request.html_url }}
