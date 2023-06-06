@@ -2,7 +2,8 @@
 constant: model_name {
   value: "value"
   export: override
-  export: test
+  export: override
+  export: override
   view_export: test
 }
 
