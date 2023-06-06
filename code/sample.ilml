@@ -3,6 +3,10 @@ constant: model_name {
   value: "value"
   export: override
   export: override
+<<<<<<< HEAD
+=======
+  export: override
+>>>>>>> 1681c626931254a6a6608d09e1f20a3539ce5b56
   view_export: test
 }
 
