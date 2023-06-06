@@ -25,8 +25,11 @@ jobs:
       - name: Display file name if it contains hello #差分内に${target_str} を含む場合に、プルリクにコメントし却下する。
         run: |
           diff_files=`git diff --name-only  HEAD origin/${base_branch} -- ${diff_path} | tr "\n" " "`
-          
-          if [[$(grep -n -H ${target_key}  ${diff_files} | grep -v ${exclude_key} |  grep -v ${target_str}) != "" ]] ; then
+          grep_result=`grep ${target_key}  ${diff_files} | grep -v ${exclude_key} |  grep -v ${target_str}`
+          gh pr comment -b "${target_key}に${target_str}以外の値が指定されていました。
+          ${grep_result}" \
+          ${{github.event.pull_request.html_url }}
+          if [[$grep_result != "" ]] ; then
             gh pr comment -b "${target_key}に${target_str}以外の値が指定されていました。
             $(grep ${target_key}  ${diff_files} | grep -v ${exclude_key} |  grep -v ${target_str})" \
             ${{github.event.pull_request.html_url }}
