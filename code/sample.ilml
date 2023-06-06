@@ -1,0 +1,19 @@
+# モデル名を示す定数を作成
+constant: model_name {
+  value: "value"
+  export: override
+  export: test
+  view_export: test
+}
+
+# 接続名を示す定数を作成
+constant: connection_name {
+  value: "value"
+  export: override
+}
+
+# exploreのラベルのプリフィクスを示す定数を作成
+constant: explore_label_prefix {
+  value: "value"
+  export: override
+}
