@@ -4,6 +4,7 @@ constant: model_name {
   export: override
   export: override
   export: override
+  export: override
   view_export: test
 }
 
