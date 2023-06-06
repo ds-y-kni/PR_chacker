@@ -1,4 +1,4 @@
-name: pr_hello_checker             # workflow 名
+name: pr_check_export     # workflow 名
 on:
   pull_request:
     types: [opened, synchronize, reopened]
@@ -8,12 +8,12 @@ env:
   diff_path: "code/**" #探索するディレクトリの指定
   target_key: "export" #探索するkeyの指定
   exclude_key: "view_export" #探索しないkeyの指定
-  target_str: "export" #探索する文字列の指定
+  target_str: "override" #探索する文字列の指定
   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} #トークンの宣言。
   URL: ${{ github.event.pull_request.html_url }} #プルリクのURL。
 jobs:
   build:  # job id
-    name:  Find hello strings # job 名
+    name:  Find export  # job 名
     runs-on: ubuntu-latest # 仮想環境指定（Windows Server, Ubuntu, Mac OSをサポートする）
     steps:
       - name: Switch to pull request branch
@@ -25,9 +25,12 @@ jobs:
       - name: Display file name if it contains hello #差分内に${target_str} を含む場合に、プルリクにコメントし却下する。
         run: |
           diff_files=`git diff --name-only  HEAD origin/${base_branch} -- ${diff_path} | tr "\n" " "`
-          if $(grep ${target_key}  ${diff_files} | grep -v ${exclude_key} |  grep -v ${target_str}); then
+          gh pr comment -b "${target_key}に${target_str}以外の値が指定されていました。
+          $(grep ${target_key}  ${diff_files} | grep -v ${exclude_key} |  grep -v ${target_str})" \
+          ${{github.event.pull_request.html_url }}
+          if [[ $(grep ${target_key}  ${diff_files} | grep -v ${exclude_key} |  grep -v ${target_str}) != "" ]] ; then
             gh pr comment -b "${target_key}に${target_str}以外の値が指定されていました。
-            $(grep ${target_key}  ${diff_files} | grep -v ${exclude_key} |  grep -v ${target_str})\" \
+            $(grep ${target_key}  ${diff_files} | grep -v ${exclude_key} |  grep -v ${target_str})" \
             ${{github.event.pull_request.html_url }}
             exit 1
             echo "contains ${target_str}"
