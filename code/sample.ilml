@@ -1,4 +1,4 @@
-# モデル名を示す定数を作成
+# モデル名を示す定数を作成 hello
 constant: model_name {
   value: "value"
   export: override
