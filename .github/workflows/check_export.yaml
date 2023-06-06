@@ -26,7 +26,7 @@ jobs:
         run: |
           diff_files=`git diff --name-only  HEAD origin/${base_branch} -- ${diff_path} | tr "\n" " "`
           
-          grep_result=`grep ${target_key}  ${diff_files} | grep -v ${exclude_key} |  grep -v ${target_str}`
+          grep_result=$(grep ${target_key}  ${diff_files} | grep -v ${exclude_key} |  grep -v ${target_str})
           gh pr comment -b "${target_key}に${target_str}以外の値が指定されていました。
           $(grep ${target_key}  ${diff_files} | grep -v ${exclude_key} |  grep -v ${target_str})" \
           ${{github.event.pull_request.html_url }}
