@@ -5,7 +5,7 @@ on:
     branches: [ main ]
 env:
   base_branch: "main" 
-  diff_path: "sample.mklm" #探索するファイル
+  diff_path: "sample.lkml" #探索するファイル
   target_str: "hello" #探索する文字列の指定
   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} #トークンの宣言。
   URL: ${{ github.event.pull_request.html_url }} #プルリクのURL。
