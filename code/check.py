@@ -1,7 +1,7 @@
 import re
 import sys
 def find_id_values(file_path):
-    pattern = re.compile(r'\s*\s*export\s*:\s*([^"]+)')
+    pattern = re.compile(r'\s*export\s*:\s*([^"]+)')
     with open(file_path, 'r') as file:
         for line in file:
             match = pattern.search(line)
