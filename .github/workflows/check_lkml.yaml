@@ -22,8 +22,10 @@ jobs:
         run: git fetch origin ${base_branch}:${base_branch}
       - name: check pattern 1 #差分内に${target_str} を含む場合に、プルリクにコメントし却下する。
         run: |
-          if [[ $(cat ${diff_path} |  tr "\n" " " |
-          grep 'constant:\s*model_name\s*{\s*value:\s*"picsr02_dev"\s*export:\s*override_required\s*}'
+          if [[ $(
+            cat ${diff_path} |  
+            tr "\n" " " |
+            grep 'constant:\s*model_name\s*{\s*value:\s*"picsr02_dev"\s*export:\s*override_required\s*}'
           ) == "" ]]; then
             gh pr comment -b "${diff_path}が変更されています。" \
             ${{github.event.pull_request.html_url }}
@@ -32,8 +34,11 @@ jobs:
           fi
       - name: check pattern 2 #差分内に${target_str} を含む場合に、プルリクにコメントし却下する。
         run: |
-          if [[ $(cat ${diff_path} |  tr "\n" " " |grep 'constant:\s*model_name\s*{\s*export:\s*override_required\s*value:\s*"picsr02_dev"\s*}'
-) == "" ]]; then
+          if [[ $(
+            cat ${diff_path} |
+            tr "\n" " " |
+            grep 'constant:\s*model_name\s*{\s*export:\s*override_required\s*value:\s*"picsr02_dev"\s*}'
+          ) == "" ]]; then
             gh pr comment -b "${diff_path}が変更されています。" \
             ${{github.event.pull_request.html_url }}
             exit 1
