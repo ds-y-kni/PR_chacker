@@ -24,12 +24,12 @@ jobs:
       - name: check pattern  #差分内に${target_str} を含む場合に、プルリクにコメントし却下する。
         run: |
           file_str=`cat ${diff_path} |  tr -d "\n"  |tr -d " " `
-          if [[$(
-            grep 'constant:model_name{value:\"test\"export:override_required}' ${file_str}
+          if [[ $(
+            grep 'constant:model_name{value:\"test\"export:override_required}' "${file_str}"
           ) == "" 
           &&
           $(
-            grep 'constant:model_name{export:override_requiredvalue:\"test\"}' ${file_str}
+            grep 'constant:model_name{export:override_requiredvalue:\"test\"}' "${file_str}"
           ) == ""
           ]]; then
             gh pr comment -b "${diff_path}が変更されています。" \
