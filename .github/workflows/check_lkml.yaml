@@ -5,7 +5,7 @@ on:
     branches: [ main ]
 env:
   base_branch: "main" 
-  diff_path: "code/sample.lkml" #探索するファイル
+  diff_path: "/code/sample.lkml" #探索するファイル
   value_str: "test" #valueに与えている文字列
   constant_str: "model_name" #valueに与えている文字列
   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} #トークンの宣言。
@@ -23,12 +23,7 @@ jobs:
         run: git fetch origin ${base_branch}:${base_branch}
       - name: check pattern 1 #差分内に${target_str} を含む場合に、プルリクにコメントし却下する。
         run: |
-          gh pr comment -b "debug-1
-          $(cat ${diff_path} |  
-            tr "\n" "" |
-            tr "\s" "" )
-          " \
-            ${{github.event.pull_request.html_url }}
+          
           gh pr comment -b "debug-2 
           
             'constant:${constant_str}{value:"${value_str}"export:override_required}'
