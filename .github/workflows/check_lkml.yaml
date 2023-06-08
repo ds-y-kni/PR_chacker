@@ -23,15 +23,14 @@ jobs:
         run: git fetch origin ${base_branch}:${base_branch}
       - name: check pattern  #差分内に${target_str} を含む場合に、プルリクにコメントし却下する。
         run: |
-          
-          
           if [[ $(
             cat ${diff_path} |  
             tr -d "\n"  |
             tr -d " " |
             grep 'constant:model_name{value:\"test\"export:override_required}'
-          ) == "" 
+          ) == "" ]]
           ||
+          [[
           $(
             cat ${diff_path} |
             tr -d "\n"  |
