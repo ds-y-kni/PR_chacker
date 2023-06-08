@@ -1,17 +1,18 @@
-name: pr_mklm_checker             # workflow 名
+name: pr_lklm_checker             # workflow 名
 on:
   pull_request:
     types: [opened, synchronize, reopened]
     branches: [ main ]
 env:
   base_branch: "main" 
-  diff_path: "sample.lkml" #探索するファイル
-  target_str: "hello" #探索する文字列の指定
+  diff_path: "code/sample.lkml" #探索するファイル
+  value_str: "test" #valueに与えている文字列
+  constant_str: "model_name" #valueに与えている文字列
   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} #トークンの宣言。
   URL: ${{ github.event.pull_request.html_url }} #プルリクのURL。
 jobs:
   build:  # job id
-    name:  Check mklm strings # job 名
+    name:  Check lklm strings # job 名
     runs-on: ubuntu-latest # 仮想環境指定（Windows Server, Ubuntu, Mac OSをサポートする）
     steps:
       - name: Switch to pull request branch
@@ -20,19 +21,23 @@ jobs:
           ref: ${{ github.event.pull_request.head.sha }}
       - name: Fetch base branch
         run: git fetch origin ${base_branch}:${base_branch}
-      - name: check pattern 1 #差分内に${target_str} を含む場合に、プルリクにコメントし却下する。
+      - name: check pattern  #差分内に${target_str} を含む場合に、プルリクにコメントし却下する。
         run: |
-          if [[ $(cat ${diff_path} |  tr "\n" " " |grep 'constant:\s*model_name\s*{\s*value:\s*"picsr02_dev"\s*export:\s*override_required\s*}'
-) == "" ]]; then
-            gh pr comment -b "${diff_path}が変更されています。" \
-            ${{github.event.pull_request.html_url }}
-            exit 1
-            echo "contains ${target_str}"
-          fi
-      - name: check pattern 2 #差分内に${target_str} を含む場合に、プルリクにコメントし却下する。
-        run: |
-          if [[ $(cat ${diff_path} |  tr "\n" " " |grep 'constant:\s*model_name\s*{\s*export:\s*override_required\s*value:\s*"picsr02_dev"\s*}'
-) == "" ]]; then
+          if [[ $(
+            cat ${diff_path} |  
+            tr -d "\n"  |
+            tr -d " " |
+            grep 'constant:model_name{value:\"test\"export:override_required}'
+          ) == "" ]]
+          ||
+          [[
+          $(
+            cat ${diff_path} |
+            tr -d "\n"  |
+            tr -d " " |
+            grep 'constant:model_name{value:\"test\"export:override_required}'
+          ) == ""
+          ]]; then
             gh pr comment -b "${diff_path}が変更されています。" \
             ${{github.event.pull_request.html_url }}
             exit 1
