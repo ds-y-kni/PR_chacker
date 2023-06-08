@@ -25,7 +25,7 @@ jobs:
         run: |
           gh pr comment -b "debug-0
           
-            $(cat code/sample.lkml
+            $(cat code/sample.lkml)
           " \
             ${{github.event.pull_request.html_url }}
           gh pr comment -b "debug-1 
