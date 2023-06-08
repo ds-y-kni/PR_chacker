@@ -5,7 +5,7 @@ on:
     branches: [ main ]
 env:
   base_branch: "main" 
-  diff_path: "/code/sample.lkml" #探索するファイル
+  diff_path: "code/sample.lkml" #探索するファイル
   value_str: "test" #valueに与えている文字列
   constant_str: "model_name" #valueに与えている文字列
   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} #トークンの宣言。
@@ -25,7 +25,7 @@ jobs:
         run: |
           gh pr comment -b "debug-0
           
-            $(ls code)
+            $(cat code/sample.lkml
           " \
             ${{github.event.pull_request.html_url }}
           gh pr comment -b "debug-1 
