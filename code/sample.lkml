@@ -1,6 +1,5 @@
 # モデル名を示す定数を作成
 constant: model_name {
-  value: "test"
   export: override_required
   value: "test"
   
