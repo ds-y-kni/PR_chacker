@@ -21,7 +21,7 @@ jobs:
           ref: ${{ github.event.pull_request.head.sha }}
       - name: Fetch base branch
         run: git fetch origin ${base_branch}:${base_branch}
-      - name: check pattern 1 #差分内に${target_str} を含む場合に、プルリクにコメントし却下する。
+      - name: check pattern  #差分内に${target_str} を含む場合に、プルリクにコメントし却下する。
         run: |
           
           
@@ -30,20 +30,15 @@ jobs:
             tr -d "\n"  |
             tr -d " " |
             grep 'constant:model_name{value:\"test\"export:override_required}'
-          ) == "" ]]; then
-            gh pr comment -b "${diff_path}が変更されています。" \
-            ${{github.event.pull_request.html_url }}
-            exit 1
-            echo "contains ${target_str}"
-          fi
-      - name: check pattern 2 #差分内に${target_str} を含む場合に、プルリクにコメントし却下する。
-        run: |
-          if [[ $(
+          ) == "" 
+          ||
+          $(
             cat ${diff_path} |
             tr -d "\n"  |
             tr -d " " |
             grep 'constant:model_name{value:\"test\"export:override_required}'
-          ) == "" ]]; then
+          ) == ""
+          ]]; then
             gh pr comment -b "${diff_path}が変更されています。" \
             ${{github.event.pull_request.html_url }}
             exit 1
