@@ -25,7 +25,7 @@ jobs:
         run: |
           gh pr comment -b "debug-0
           
-            $(ls)
+            $(ls code)
           " \
             ${{github.event.pull_request.html_url }}
           gh pr comment -b "debug-1 
