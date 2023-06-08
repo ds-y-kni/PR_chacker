@@ -25,14 +25,15 @@ jobs:
         run: |
           gh pr comment -b "debug-0
           
-            $(echo 'constant:${model_name}{value:\"test\"export:override_required}')
+            $(echo 'constant:model_name{value:\"test\"export:override_required}')
           " \
             ${{github.event.pull_request.html_url }}
           gh pr comment -b "debug-0
           
             $(cat ${diff_path} |  
             tr -d "\n"  |
-            tr -d " " )
+            tr -d " " |
+            grep 'constant:model_name{value:\"test\"export:override_required}')
           " \
             ${{github.event.pull_request.html_url }}
           
