@@ -24,13 +24,7 @@ jobs:
       - name: check pattern  #差分内に${target_str} を含む場合に、プルリクにコメントし却下する。
         run: |
           file_str=`cat ${diff_path} |  tr -d "\n"  |tr -d " " `
-          if [[ $(cat ${diff_path} |
-            tr -d "\n"  |
-            tr -d " " |
-            grep 'constant:model_name{value:\"test\"export:override_required}'
-          ) == "" 
-          &&
-          $(
+          if [[ $(
             cat ${diff_path} |
             tr -d "\n"  |
             tr -d " " |
