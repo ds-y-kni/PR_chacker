@@ -23,29 +23,12 @@ jobs:
         run: git fetch origin ${base_branch}:${base_branch}
       - name: check pattern 1 #差分内に${target_str} を含む場合に、プルリクにコメントし却下する。
         run: |
-          gh pr comment -b "debug-0
-          
-            $(cat code/sample.lkml)
-          " \
-            ${{github.event.pull_request.html_url }}
-          gh pr comment -b "debug-1 
-          
-            $(cat code/sample.lkml|  
-            tr -d "\n"  |
-            tr -d " "  )
-          " \
-            ${{github.event.pull_request.html_url }}
-          gh pr comment -b "debug-2 
-          
-            'constant:${constant_str}{value:\"${value_str}\"export:override_required}'
-          " \
-            ${{github.event.pull_request.html_url }}
           
           if [[ $(
             cat ${diff_path} |  
-            tr "\n" "" |
-            tr "\s" "" |
-            grep 'constant:${constant_str}{value:"test"export:override_required}'
+            tr -d "\n"  |
+            tr -d " " |
+            grep 'constant:${constant_str}{value:\"${value_str}\"export:override_required}'
           ) == "" ]]; then
             gh pr comment -b "${diff_path}が変更されています。" \
             ${{github.event.pull_request.html_url }}
@@ -56,9 +39,9 @@ jobs:
         run: |
           if [[ $(
             cat ${diff_path} |
-            tr "\n" "" |
-            tr "\s" "" |
-            grep 'constant:${constant_str}{export:override_requiredvalue:"test"}'
+            tr -d "\n"  |
+            tr -d " " |
+            grep 'constant:${constant_str}{value:\"${value_str}\"export:override_required}'
           ) == "" ]]; then
             gh pr comment -b "${diff_path}が変更されています。" \
             ${{github.event.pull_request.html_url }}
