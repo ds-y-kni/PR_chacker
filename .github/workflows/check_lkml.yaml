@@ -25,13 +25,14 @@ jobs:
         run: |
           gh pr comment -b "debug 
           
-            "constant:\s*${constant_str}\s*{\s*value:\s*"test"\s*export:\s*override_required\s*}"
+            "constant:${constant_str}{value:"${value_str}"export:override_required}"
           " \
             ${{github.event.pull_request.html_url }}
           if [[ $(
             cat ${diff_path} |  
-            tr "\n" " " |
-            grep 'constant:\s*${constant_str}\s*{\s*value:\s*"test"\s*export:\s*override_required\s*}'
+            tr "\n" "" |
+            tr "\s" "" |
+            grep 'constant:${constant_str}{value:"test"export:override_required}'
           ) == "" ]]; then
             gh pr comment -b "${diff_path}が変更されています。" \
             ${{github.event.pull_request.html_url }}
@@ -42,8 +43,9 @@ jobs:
         run: |
           if [[ $(
             cat ${diff_path} |
-            tr "\n" " " |
-            grep 'constant:\s*${constant_str}\s*{\s*export:\s*override_required\s*value:\s*"test"\s*}'
+            tr "\n" "" |
+            tr "\s" "" |
+            grep 'constant:${constant_str}{export:override_requiredvalue:"test"}'
           ) == "" ]]; then
             gh pr comment -b "${diff_path}が変更されています。" \
             ${{github.event.pull_request.html_url }}
