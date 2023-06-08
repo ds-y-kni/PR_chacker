@@ -28,9 +28,8 @@ jobs:
             tr -d "\n"  |
             tr -d " " |
             grep 'constant:model_name{value:\"test\"export:override_required}'
-          ) == "" ]]
+          ) == "" 
           ||
-          [[
           $(
             cat ${diff_path} |
             tr -d "\n"  |
