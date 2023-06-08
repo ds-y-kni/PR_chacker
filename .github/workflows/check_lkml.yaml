@@ -23,11 +23,18 @@ jobs:
         run: git fetch origin ${base_branch}:${base_branch}
       - name: check pattern 1 #差分内に${target_str} を含む場合に、プルリクにコメントし却下する。
         run: |
-          gh pr comment -b "debug 
+          gh pr comment -b "debug-1
+          $(cat ${diff_path} |  
+            tr "\n" "" |
+            tr "\s" "" )
+          " \
+            ${{github.event.pull_request.html_url }}
+          gh pr comment -b "debug-2 
           
             'constant:${constant_str}{value:"${value_str}"export:override_required}'
           " \
             ${{github.event.pull_request.html_url }}
+          
           if [[ $(
             cat ${diff_path} |  
             tr "\n" "" |
