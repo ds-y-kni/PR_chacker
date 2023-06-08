@@ -29,7 +29,7 @@ jobs:
             cat ${diff_path} |  
             tr -d "\n"  |
             tr -d " " |
-            grep 'constant:"${constant_str}"{value:\""${value_str}"\"export:override_required}'
+            grep 'constant:model_name{value:\"test\"export:override_required}'
           ) == "" ]]; then
             gh pr comment -b "${diff_path}が変更されています。" \
             ${{github.event.pull_request.html_url }}
@@ -42,7 +42,7 @@ jobs:
             cat ${diff_path} |
             tr -d "\n"  |
             tr -d " " |
-            grep 'constant:"${constant_str}"{value:\""${value_str}"\"export:override_required}'
+            grep 'constant:model_name{value:\"test\"export:override_required}'
           ) == "" ]]; then
             gh pr comment -b "${diff_path}が変更されています。" \
             ${{github.event.pull_request.html_url }}
