@@ -25,11 +25,13 @@ jobs:
         run: |
           file_str=`cat ${diff_path} |  tr -d "\n"  |tr -d " " `
           if [[ $(
-            grep 'constant:model_name{value:\"test\"export:override_required}' "${file_str}"
+            echo "${file_str}" | 
+            grep 'constant:model_name{value:\"test\"export:override_required}'
           ) == "" 
           &&
           $(
-            grep 'constant:model_name{export:override_requiredvalue:\"test\"}' "${file_str}"
+            echo "${file_str}" |
+            grep 'constant:model_name{export:override_requiredvalue:\"test\"}'
           ) == ""
           ]]; then
             gh pr comment -b "${diff_path}が変更されています。" \
