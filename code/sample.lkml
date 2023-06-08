@@ -2,6 +2,7 @@
 constant: model_name {
   value: "test"
   export: override_required
+  
 }
 
 # 接続名を示す定数を作成
