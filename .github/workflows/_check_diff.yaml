@@ -12,7 +12,7 @@ on:
       - "!cinfigfile" 
 jobs:
   build:
-    name:  true # job 名
+    name:  Check Diff Important File # job 名
     runs-on: ubuntu-latest
     steps:
       - run: 'echo "No build required"'
