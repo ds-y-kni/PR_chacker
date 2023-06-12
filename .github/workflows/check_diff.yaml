@@ -15,7 +15,6 @@ env:
   URL: ${{ github.event.pull_request.html_url }} #プルリクのURL。参照していないが、消すと動かない？
 jobs:
   build:  # job id
-    name:  Check Diff Important File # job 名
     runs-on: ubuntu-latest # 仮想環境指定（Windows Server, Ubuntu, Mac OSをサポートする）
     steps:
     - run: |

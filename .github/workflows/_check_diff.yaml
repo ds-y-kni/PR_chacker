@@ -1,7 +1,7 @@
 # PRを投げられた際に、指定のディレクトリ以外に変更がないことを確認するGitHubActions。
 # 指定のディレクトリはexclude_pathで指定している。
 
-name: pr_diff_file_checker_1
+name: pr_diff_file_checker
 on:
   pull_request:
     types: [opened, synchronize, reopened]
@@ -12,7 +12,6 @@ on:
       - "!cinfigfile" 
 jobs:
   build:
-    name:  True # job 名
     runs-on: ubuntu-latest
     steps:
       - run: 'echo "No build required"'
