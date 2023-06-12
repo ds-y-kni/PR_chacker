@@ -10,6 +10,7 @@ on:
       - "!cinfigfile" 
 jobs:
   build:
+    name:  True # job 名
     runs-on: ubuntu-latest
     steps:
       - run: 'echo "No build required"'
