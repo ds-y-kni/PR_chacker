@@ -22,17 +22,5 @@ jobs:
     name:  Check Diff Important File # job 名
     runs-on: ubuntu-latest # 仮想環境指定（Windows Server, Ubuntu, Mac OSをサポートする）
     steps:
-      - name: Switch to pull request branch
-        uses: actions/checkout@v3
-        with:
-          ref: ${{ github.event.pull_request.head.sha }}
-      - name: Fetch base branch
-        run: git fetch origin ${base_branch}:${base_branch}
-      - name: Confirmation that critical files have not been modified #重要なファイルが変更されていないことを確認する
-        run: |
-          diff_files=`git diff --name-only HEAD origin/${base_branch} \
-          -- ${exclude_path_1} ${exclude_path_2}  ${exclude_path_3} | tr "\n" " "`
-          if  [[ $diff_files != "" ]]; then
-            gh pr comment -b "${diff_files}が変更されています。" ${{github.event.pull_request.html_url }}
-            exit 1
-          fi
+    - name: Confirmation that critical files have not been modified #重要なファイルが変更されていないことを確認する
+        run: exit 1
