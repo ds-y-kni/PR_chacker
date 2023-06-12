@@ -1,4 +1,5 @@
-name: pr_hoge_checker             # workflow 名
+# ファイル内に特定の文字が含まれていた際に異常終了するGitHubAction。
+name: pr_find_hoga       # workflow 名
 on:
   pull_request:
     types: [opened, synchronize, reopened]

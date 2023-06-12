@@ -1,0 +1,15 @@
+# PRを投げられた際に、指定のディレクトリ以外に変更がないことを確認するGitHubActions。
+# 指定のディレクトリはexclude_pathで指定している。
+
+name: pr_diff_file_checker
+on:
+  pull_request:
+    paths-ignore:
+      - "!/code/*"
+      - "!/.github/*"
+      - "!/cinfigfile" 
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - run: 'echo "No build required"'

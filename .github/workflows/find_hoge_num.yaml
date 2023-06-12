@@ -1,4 +1,4 @@
-name: pr_hoge_num_checker             # workflow 名
+name: pr_find_hoge_num            # workflow 名
 on:
   pull_request:
     types: [opened, synchronize, reopened]

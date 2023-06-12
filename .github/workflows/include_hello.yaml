@@ -1,4 +1,8 @@
-name: pr_hello_checker             # workflow 名
+# 特定のディレクトリ内に必ず特定の文字が入っていることの確認
+# ファイル内に必ず含まれる必要のある文をチェックするのに使用。
+#　ディレクトリはdiff_pathで指定している
+#　必ず含まれる必要のある文はtarget_strで指定
+name: pr_include_hello         # workflow 名
 on:
   pull_request:
     types: [opened, synchronize, reopened]
@@ -11,7 +15,7 @@ env:
   URL: ${{ github.event.pull_request.html_url }} #プルリクのURL。
 jobs:
   build:  # job id
-    name:  Find hello strings # job 名
+    name:  always include hello # job 名
     runs-on: ubuntu-latest # 仮想環境指定（Windows Server, Ubuntu, Mac OSをサポートする）
     steps:
       - name: Switch to pull request branch
@@ -20,7 +24,7 @@ jobs:
           ref: ${{ github.event.pull_request.head.sha }}
       - name: Fetch base branch
         run: git fetch origin ${base_branch}:${base_branch}
-      - name: Display file name if it contains hello #差分内に${target_str} を含む場合に、プルリクにコメントし却下する。
+      - name: Display file name if it don't contains hello in file #差分内に${target_str} を含む場合に、プルリクにコメントし却下する。
         run: |
           diff_files=`git diff --name-only  HEAD origin/${base_branch} -- ${diff_path} | tr "\n" " "`
           if [[ $(grep -L ${target_str} ${diff_files}) != "" ]]; then

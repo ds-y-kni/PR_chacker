@@ -1,4 +1,4 @@
-name: pr_hoga_checker             # workflow 名
+name: pr_find_hoga          # workflow 名
 on:
   pull_request:
     types: [opened, synchronize, reopened]

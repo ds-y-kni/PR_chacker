@@ -1,3 +1,12 @@
+#　指定のlkmlファイル（sample.lkml）の一部で主要な部分に変更が起きていないことを確認するGitHubActionである。
+# -----調査する主要な部分-----
+# constant: model_name {
+#  value: "test"
+#  export: override_required
+# }
+# -------------------------
+#  grep内で指定している文字列の中でvalueに対する値（test）とconstantに対する値（model_name）については文字列で直接指定する。
+#
 name: pr_lklm_checker             # workflow 名
 on:
   pull_request:

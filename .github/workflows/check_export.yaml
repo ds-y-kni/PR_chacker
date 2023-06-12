@@ -1,3 +1,6 @@
+# labelのに対して特定の値が指定されているか（export: override）を確認する
+#　その際にexportを含む別の項目(view_export)は除外する。
+# 
 name: pr_check_export     # workflow 名
 on:
   pull_request:
@@ -13,7 +16,7 @@ env:
   URL: ${{ github.event.pull_request.html_url }} #プルリクのURL。
 jobs:
   build:  # job id
-    name:  Find export  # job 名
+    name:  Check export  # job 名
     runs-on: ubuntu-latest # 仮想環境指定（Windows Server, Ubuntu, Mac OSをサポートする）
     steps:
       - name: Switch to pull request branch
@@ -22,10 +25,12 @@ jobs:
           ref: ${{ github.event.pull_request.head.sha }}
       - name: Fetch base branch
         run: git fetch origin ${base_branch}:${base_branch}
-      - name: Display file name if it contains hello #差分内に${target_str} を含む場合に、プルリクにコメントし却下する。
+      - name: eck that the target_str character is always specified in target_key. #差分内のtarget_keyにtarget_strの文字が必ず指定されていることをチェックする
         run: |
           diff_files=`git diff --name-only  HEAD origin/${base_branch} -- ${diff_path} | tr "\n" " "`
-          if [[ $(grep ${target_key}  ${diff_files} | grep -v ${exclude_key} |  grep -v ${target_str}) != "" ]] ; then
+          if [[ $(
+            grep ${target_key}  ${diff_files} | grep -v ${exclude_key} |  grep -v ${target_str}
+            ) != "" ]] ; then
             gh pr comment -b "${target_key}に${target_str}以外の値が指定されていました。
             $(grep ${target_key}  ${diff_files} | grep -v ${exclude_key} |  grep -v ${target_str})" \
             ${{github.event.pull_request.html_url }}
