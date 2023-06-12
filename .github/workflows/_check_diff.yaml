@@ -5,9 +5,9 @@ name: pr_diff_file_checker
 on:
   pull_request:
     paths-ignore:
-      - "code/*"
-      - ".github/*"
-      - "cinfigfile" 
+      - "!code/*"
+      - "!.github/*"
+      - "!cinfigfile" 
 jobs:
   build:
     runs-on: ubuntu-latest
