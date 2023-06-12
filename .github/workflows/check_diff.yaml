@@ -20,5 +20,5 @@ jobs:
     steps:
     - name: Confirmation that critical files have not been modified #重要なファイルが変更されていないことを確認する
         run: |
-          gh pr comment -b "${diff_files}が変更されています。" ${{github.event.pull_request.html_url }}
+          gh pr comment -b "変更されています。" ${{github.event.pull_request.html_url }}
           exit 1
