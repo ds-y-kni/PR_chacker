@@ -7,9 +7,9 @@ on:
     types: [opened, synchronize, reopened]
     branches: [ main ]
     paths:
-      - "!/code/*"
-      - "!/.github/*"
-      - "!/cinfigfile" 
+      - "!code/*"
+      - "!.github/*"
+      - "!cinfigfile" 
 env:
   base_branch: "main" 
   exclude_path_1: ":!/code/*"
