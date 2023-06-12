@@ -11,10 +11,6 @@ on:
       - "!.github/*"
       - "!cinfigfile" 
 env:
-  base_branch: "main" 
-  exclude_path_1: ":!/code/*"
-  exclude_path_3: ":!/.github/*"
-  exclude_path_2: ":!/cinfigfile" #「:!」で取り除いて検索s
   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} #トークンの宣言。必要
   URL: ${{ github.event.pull_request.html_url }} #プルリクのURL。参照していないが、消すと動かない？
 jobs:
@@ -23,4 +19,6 @@ jobs:
     runs-on: ubuntu-latest # 仮想環境指定（Windows Server, Ubuntu, Mac OSをサポートする）
     steps:
     - name: Confirmation that critical files have not been modified #重要なファイルが変更されていないことを確認する
-        run: exit 1
+        run: |
+          gh pr comment -b "${diff_files}が変更されています。" ${{github.event.pull_request.html_url }}
+          exit 1
