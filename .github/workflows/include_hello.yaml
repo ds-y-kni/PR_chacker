@@ -31,7 +31,7 @@ jobs:
           ${{github.event.pull_request.html_url }}
           if [[ $(grep -L ${target_str} ${diff_files}) != "" 
           ||
-          $(grep -L ${target_str} ${diff_files}) != "(standard input)"
+          ${diff_files} != ""
           ]]; then
             gh pr comment -b "$(grep -L ${target_str} ${diff_files})に${target_str}が含まれていませんでした。" \
             ${{github.event.pull_request.html_url }}
