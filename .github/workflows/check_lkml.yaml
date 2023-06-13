@@ -12,6 +12,8 @@ on:
   pull_request:
     types: [opened, synchronize, reopened]
     branches: [ main ]
+    paths: 
+      - "code/sample.lkml"
 env:
   base_branch: "main" 
   diff_path: "code/sample.lkml" #探索するファイル

@@ -1,0 +1,16 @@
+# PRを投げられた際に、指定のディレクトリ以外に変更がないことを確認するGitHubActions。
+# 指定のディレクトリはexclude_pathで指定している。
+
+name: pr_diff_file_checker # workflow 名
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+    branches: [ main ]
+    paths-ignore:
+      - "code/sample.lkml"
+jobs:
+  build:
+    name:  Check lklm strings # job 名
+    runs-on: ubuntu-latest
+    steps:
+      - run: 'echo "No build required"'

@@ -7,6 +7,8 @@ on:
   pull_request:
     types: [opened, synchronize, reopened]
     branches: [ main ]
+    paths: 
+      - "code/**"
 env:
   base_branch: "main" 
   diff_path: "code/**" #探索する文字列の指定

@@ -1,0 +1,14 @@
+# 特定のディレクトリ内に必ず特定の文字が入っていることの確認
+# ファイル内に必ず含まれる必要のある文をチェックするのに使用。
+#　ディレクトリはdiff_pathで指定している
+#　必ず含まれる必要のある文はtarget_strで指定
+name: pr_include_hello         # workflow 名
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+    branches: [ main ]
+    paths-ignore:
+jobs:
+  build:  # job id
+    name:  always include hello # job 名
+      - run: 'echo "No build required"'
